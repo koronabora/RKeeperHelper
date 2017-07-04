@@ -1,0 +1,34 @@
+2017-07-03T21:14:00:8 Warning: QSqlDatabasePrivate::invalidateDb>> QSqlDatabasePrivate::removeDatabase: connection 'FireBirdBase' is still in use, all queries will cease to work.
+2017-07-03T23:34:44:1 Starting an application!
+2017-07-03T23:34:53:2 Loading worker!
+2017-07-03T23:34:53:3 Loading print handler!
+2017-07-03T23:34:53:4 Starting worker!
+2017-07-03T23:34:53:5 Starting print handler!
+2017-07-03T23:34:54:6 Info: Worker::run>> "Sucsesfully connected to database: D:\\Fitness\\Empty\\FITNESS.FDB"
+2017-07-03T23:34:56:7 Info: Worker::run>> "C:/Qt/5.9/msvc2015/plugins_D:/YandexDisk/Projects/AquaPrinter/Win32/Debug"
+2017-07-03T23:34:56:8 Info: Worker::run>> Error while connecting to database:
+2017-07-03T23:34:56:9 Info: Worker::run>> "[Microsoft][Диспетчер драйверов ODBC] Источник данных не найден и не указан драйвер, используемый по умолчанию QODBC3: Unable to connect"
+2017-07-03T23:34:57:10 Warning: QWindowsWindow::setGeometry>> QWindowsWindow::setGeometry: Unable to set geometry 1056x1074+11+44 on QWidgetWindow/'AquaPrinterClassWindow'. Resulting geometry:  1056x1051+11+44 (frame: 11, 44, 11, 11, custom margin: 0, 0, 0, 0, minimum size: 817x919, maximum size: 16777215x16777215).
+2017-07-03T23:35:14:11 Warning: QSqlDatabasePrivate::invalidateDb>> QSqlDatabasePrivate::removeDatabase: connection 'FireBirdBase' is still in use, all queries will cease to work.
+2017-07-03T23:35:14:12 Warning: QSqlDatabasePrivate::invalidateDb>> QSqlDatabasePrivate::removeDatabase: connection 'MSSQL' is still in use, all queries will cease to work.
+2017-07-03T23:55:54:1 Starting an application!
+2017-07-03T23:56:03:2 Loading worker!
+2017-07-03T23:56:03:3 Loading print handler!
+2017-07-03T23:56:03:4 Starting worker!
+2017-07-03T23:56:03:5 Starting print handler!
+2017-07-03T23:56:04:6 Warning: QWindowsWindow::setGeometry>> QWindowsWindow::setGeometry: Unable to set geometry 1056x1074+11+44 on QWidgetWindow/'AquaPrinterClassWindow'. Resulting geometry:  1056x1051+11+44 (frame: 11, 44, 11, 11, custom margin: 0, 0, 0, 0, minimum size: 817x919, maximum size: 16777215x16777215).
+2017-07-03T23:56:04:7 Info: Worker::run>> "Sucsesfully connected to database: D:\\Fitness\\Empty\\FITNESS.FDB"
+2017-07-03T23:56:04:8 Info: Worker::run>> "C:/Qt/5.9/msvc2015/plugins_D:/YandexDisk/Projects/AquaPrinter/Win32/Debug"
+2017-07-03T23:56:04:9 Info: Worker::run>> Error while connecting to database:
+2017-07-03T23:58:20:1 Starting an application!
+2017-07-03T23:58:28:2 Loading worker!
+2017-07-03T23:58:28:3 Loading print handler!
+2017-07-03T23:58:28:4 Starting worker!
+2017-07-03T23:58:28:5 Starting print handler!
+2017-07-03T23:58:29:6 Info: Worker::run>> "Sucsesfully connected to database: D:\\Fitness\\Empty\\FITNESS.FDB"
+2017-07-03T23:58:29:7 Info: Worker::run>> "C:/Qt/5.9/msvc2015/plugins_D:/YandexDisk/Projects/AquaPrinter/Win32/Debug"
+2017-07-03T23:58:29:8 Info: Worker::run>> Error while connecting to database:
+2017-07-03T23:59:01:9 Info: Worker::run>> "[Microsoft][Диспетчер драйверов ODBC] Источник данных не найден и не указан драйвер, используемый по умолчанию QODBC3: Unable to connect"
+2017-07-03T23:59:02:10 Warning: QWindowsWindow::setGeometry>> QWindowsWindow::setGeometry: Unable to set geometry 1056x1074+11+44 on QWidgetWindow/'AquaPrinterClassWindow'. Resulting geometry:  1056x1051+11+44 (frame: 11, 44, 11, 11, custom margin: 0, 0, 0, 0, minimum size: 817x919, maximum size: 16777215x16777215).
+2017-07-03T23:59:05:11 Warning: QSqlDatabasePrivate::invalidateDb>> QSqlDatabasePrivate::removeDatabase: connection 'FireBirdBase' is still in use, all queries will cease to work.
+2017-07-03T23:59:05:12 Warning: QSqlDatabasePrivate::invalidateDb>> QSqlDatabasePrivate::removeDatabase: connection 'MSSQL' is still in use, all queries will cease to work.
