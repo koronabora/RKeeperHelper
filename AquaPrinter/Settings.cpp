@@ -21,7 +21,7 @@ Settings::Settings()
 	fsqlRkTimeMaxVal = 10000000;
 	uiOrigionalText = tr("изначально ");
 	progressBarMax = 33;
-	pass = 3870440254;
+	pass = 3664435546;
 	lostFolioUiName = "LostFoliosInfo.ui";
 	lostFolioUiCloseButton = "closeButton";
 	lostFolioUiMainTable = "mainTable";

@@ -623,12 +623,12 @@
               <widget class="QLabel" name="label_32">
                <property name="maximumSize">
                 <size>
-                 <width>150</width>
+                 <width>200</width>
                  <height>16777215</height>
                 </size>
                </property>
                <property name="text">
-                <string>Потеряных заказов:</string>
+                <string>Неоткрепленных карт:</string>
                </property>
               </widget>
              </item>
