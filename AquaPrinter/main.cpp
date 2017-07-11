@@ -3,6 +3,9 @@
 
 #define QT_MESSAGELOGCONTEXT
 
+#ifdef _DEBUG
+	#include <vld.h>
+#endif
 #include "AquaPrinter.h"
 #include <QtWidgets/QApplication>
 #include <QThread>
@@ -72,11 +75,13 @@ int main(int argc, char *argv[])
 	AquaPrinter ui;
 
 	qInfo() << "Loading worker!";
-	Worker w;
+	Worker* w = new Worker();
 	QThread* wt = new QThread();
-	w.moveToThread(wt);
-	QObject::connect(wt, SIGNAL(started()), &w, SLOT(run()));
-	QObject::connect(&w, SIGNAL(workFinished()), wt, SLOT(quit()));
+	//QThread wt;
+	w->moveToThread(wt);
+	QObject::connect(wt, SIGNAL(started()), w, SLOT(run()));
+	QObject::connect(w, SIGNAL(workFinished()), wt, SLOT(quit()));
+	//QObject::connect(wt, SIGNAL(finished()), w, SLOT(deleteLater()));
 	QObject::connect(wt, SIGNAL(finished()), wt, SLOT(deleteLater()));
 
 	qInfo() << "Loading print handler!";
@@ -85,28 +90,46 @@ int main(int argc, char *argv[])
 	if (wt != nullptr) {
 		qDebug() << "Starting worker!";
 		wt->start();
+		//wt.start();
 	}
 
 	qDebug() << "Starting print handler!";
 	ph.run();
 
-	QObject::connect(&ui, &AquaPrinter::getInfo, &w, &Worker::getInfo);
+	QObject::connect(&ui, &AquaPrinter::getInfo, w, &Worker::getInfo);
 	QObject::connect(&ui, &AquaPrinter::printInfo, &ph, &PrintHandler::printInfo);
-	QObject::connect(&w, &Worker::haveInfo, &ui, &AquaPrinter::haveInfo);
-	QObject::connect(&w, &Worker::mssqlStateChanged, &ui, &AquaPrinter::mssqlStateChanged);
-	QObject::connect(&w, &Worker::fbsqllStateChanged, &ui, &AquaPrinter::fbsqllStateChanged);
-	QObject::connect(&w, &Worker::updateProgressBar, &ui, &AquaPrinter::updateProgressBar);
+	QObject::connect(w, &Worker::haveInfo, &ui, &AquaPrinter::haveInfo);
+	QObject::connect(w, &Worker::mssqlStateChanged, &ui, &AquaPrinter::mssqlStateChanged);
+	QObject::connect(w, &Worker::fbsqllStateChanged, &ui, &AquaPrinter::fbsqllStateChanged);
+	QObject::connect(w, &Worker::updateProgressBar, &ui, &AquaPrinter::updateProgressBar);
 
 	ui.showMaximized();
 	// read password
 	bool ready = false;
-	while (!ready)
+	bool exit = false;
+	int res = 0;
+	while (!ready && !exit)
 	{
 		bool ok;
 		QString text = QInputDialog::getText(&ui, QObject::tr("Внимание!"), QObject::tr("Введите пароль:"), QLineEdit::Normal, QDir::home().dirName(), &ok);
 		qint64 hash = qHash(text);
 		if (ok && hash == Settings::i()->pass)
 			ready = true;
+		else if (!ok)
+			exit = true;
 	}
-	return a.exec();
+	if (!exit)
+		res = a.exec();
+	else
+		ui.hide();
+	if (wt != nullptr)
+	{
+		wt->quit();
+		w->deleteLater();
+		wt->wait();
+	}
+	else
+		if (w != nullptr)
+			w->deleteLater();
+	return res;
 }

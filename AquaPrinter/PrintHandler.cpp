@@ -11,21 +11,6 @@ PrintHandler::~PrintHandler()
 	emit workFinished();
 }
 
-QString PrintHandler::fNum(qint64 num)
-{
-	QString src = QString::number(num);
-	QString res;
-	if (src.size() > 0)
-		for (quint64 i = 0; i < src.size(); i++)
-		{
-			if ((src.size() - i) % 3 == 0)
-				res.append(' ');
-			res.append(src.at(i));
-		}
-
-	return res;
-}
-
 void PrintHandler::printInfo(AllData s)
 {
 	QPrinter printer;
@@ -52,66 +37,87 @@ void PrintHandler::printInfo(AllData s)
 		font.setPointSize(Settings::i()->printFontSize);
 		painter.setFont(font);
 
-		if (s.blueAll == s.blueAllOrig)
-			painter.drawText(Settings::i()->printHorizontalLineShift*lX, (lineShift + lineWrap*(k++))*lY, "Общий приход синий ресепшн: " + fNum(s.blueAll));
-		else
-			painter.drawText(Settings::i()->printHorizontalLineShift*lX, (lineShift + lineWrap*(k++))*lY, "Общий приход синий ресепшн: " + fNum(s.blueAll) + " (" + Settings::i()->uiOrigionalText + fNum(s.blueAllOrig) + ")");
-
 		font.setBold(true);
 		painter.setFont(font);
+		painter.drawText(Settings::i()->printHorizontalLineShift*lX, (lineShift + lineWrap*(k++))*lY, "Синий ресепшн:");
 		if (s.blueCash == s.blueCashOrig)
-			painter.drawText(Settings::i()->printHorizontalLineShift*lX, (lineShift + lineWrap*(k++))*lY, "Из них наличными: " + fNum(s.blueCash));
+			painter.drawText(Settings::i()->printHorizontalLineShift*lX, (lineShift + lineWrap*(k++))*lY, "Наличными: " + Settings::fNum(s.blueCash));
 		else
-			painter.drawText(Settings::i()->printHorizontalLineShift*lX, (lineShift + lineWrap*(k++))*lY, "Из них наличными: " + fNum(s.blueCash) + " (" + Settings::i()->uiOrigionalText + fNum(s.blueCashOrig) + ")");
+			painter.drawText(Settings::i()->printHorizontalLineShift*lX, (lineShift + lineWrap*(k++))*lY, "Наличными: " + Settings::fNum(s.blueCash) + " (" + Settings::i()->uiOrigionalText + Settings::fNum(s.blueCashOrig) + ")");
 		font.setBold(false);
 		painter.setFont(font);
-
 		if (s.blueCard == s.blueCardOrig)
-			painter.drawText(Settings::i()->printHorizontalLineShift*lX, (lineShift + lineWrap*(k++))*lY, "Картами: " + fNum(s.blueCard));
+			painter.drawText(Settings::i()->printHorizontalLineShift*lX, (lineShift + lineWrap*(k++))*lY, "Картами: " + Settings::fNum(s.blueCard));
 		else
-			painter.drawText(Settings::i()->printHorizontalLineShift*lX, (lineShift + lineWrap*(k++))*lY, "Картами: " + fNum(s.blueCard) + " (" + Settings::i()->uiOrigionalText + fNum(s.blueCardOrig) + ")");
+			painter.drawText(Settings::i()->printHorizontalLineShift*lX, (lineShift + lineWrap*(k++))*lY, "Картами: " + Settings::fNum(s.blueCard) + " (" + Settings::i()->uiOrigionalText + Settings::fNum(s.blueCardOrig) + ")");
+
+		if (s.blueAll == s.blueAllOrig)
+			painter.drawText(Settings::i()->printHorizontalLineShift*lX, (lineShift + lineWrap*(k++))*lY, "Общий приход: " + Settings::fNum(s.blueAll));
+		else
+			painter.drawText(Settings::i()->printHorizontalLineShift*lX, (lineShift + lineWrap*(k++))*lY, "Общий приход: " + Settings::fNum(s.blueAll) + " (" + Settings::i()->uiOrigionalText + Settings::fNum(s.blueAllOrig) + ")");
+
+		painter.drawText(Settings::i()->printHorizontalLineShift*lX, (lineShift + lineWrap*(k++))*lY, "Скидки и отмены: " + Settings::fNum(s.blueDisc));
 
 		k++;
-		if (s.whiteAll == s.whiteAllOrig)
-			painter.drawText(Settings::i()->printHorizontalLineShift*lX, (lineShift + lineWrap*(k++))*lY, tr("Общий приход белый ресепшн: ") + fNum(s.whiteAll));
-		else
-			painter.drawText(Settings::i()->printHorizontalLineShift*lX, (lineShift + lineWrap*(k++))*lY, tr("Общий приход белый ресепшн: ") + fNum(s.whiteAll) + " (" + Settings::i()->uiOrigionalText + fNum(s.whiteAllOrig) + ")");
-
 		font.setBold(true);
 		painter.setFont(font);
+		painter.drawText(Settings::i()->printHorizontalLineShift*lX, (lineShift + lineWrap*(k++))*lY, "Белый ресепшн:");
 		if (s.whiteCash == s.whiteCashOrig)
-			painter.drawText(Settings::i()->printHorizontalLineShift*lX, (lineShift + lineWrap*(k++))*lY, tr("Из них наличными: ") + fNum(s.whiteCash));
+			painter.drawText(Settings::i()->printHorizontalLineShift*lX, (lineShift + lineWrap*(k++))*lY, tr("Наличными: ") + Settings::fNum(s.whiteCash));
 		else
-			painter.drawText(Settings::i()->printHorizontalLineShift*lX, (lineShift + lineWrap*(k++))*lY, tr("Из них наличными: ") + fNum(s.whiteCash) + " (" + Settings::i()->uiOrigionalText + fNum(s.whiteCashOrig) + ")");
+			painter.drawText(Settings::i()->printHorizontalLineShift*lX, (lineShift + lineWrap*(k++))*lY, tr("Наличными: ") + Settings::fNum(s.whiteCash) + " (" + Settings::i()->uiOrigionalText + Settings::fNum(s.whiteCashOrig) + ")");
 		font.setBold(false);
 		painter.setFont(font);
 
 		if (s.whiteCard == s.whiteCardOrig)
-			painter.drawText(Settings::i()->printHorizontalLineShift*lX, (lineShift + lineWrap*(k++))*lY, tr("Картами: ") + fNum(s.whiteCard));
+			painter.drawText(Settings::i()->printHorizontalLineShift*lX, (lineShift + lineWrap*(k++))*lY, tr("Картами: ") + Settings::fNum(s.whiteCard));
 		else
-			painter.drawText(Settings::i()->printHorizontalLineShift*lX, (lineShift + lineWrap*(k++))*lY, tr("Картами: ") + fNum(s.whiteCard) + " (" + Settings::i()->uiOrigionalText + fNum(s.whiteCardOrig) + ")");
-
+			painter.drawText(Settings::i()->printHorizontalLineShift*lX, (lineShift + lineWrap*(k++))*lY, tr("Картами: ") + Settings::fNum(s.whiteCard) + " (" + Settings::i()->uiOrigionalText + Settings::fNum(s.whiteCardOrig) + ")");
+		if (s.whiteAll == s.whiteAllOrig)
+			painter.drawText(Settings::i()->printHorizontalLineShift*lX, (lineShift + lineWrap*(k++))*lY, tr("Общий приход: ") + Settings::fNum(s.whiteAll));
+		else
+			painter.drawText(Settings::i()->printHorizontalLineShift*lX, (lineShift + lineWrap*(k++))*lY, tr("Общий приход: ") + Settings::fNum(s.whiteAll) + " (" + Settings::i()->uiOrigionalText + Settings::fNum(s.whiteAllOrig) + ")");
+		painter.drawText(Settings::i()->printHorizontalLineShift*lX, (lineShift + lineWrap*(k++))*lY, "Скидки и отмены: " + Settings::fNum(s.whiteDisc));
 		k++;
-		painter.drawText(Settings::i()->printHorizontalLineShift*lX, (lineShift + lineWrap*(k++))*lY, tr("Браслетов: ") + fNum(s.allKeysCount));
-		painter.drawText(Settings::i()->printHorizontalLineShift*lX, (lineShift + lineWrap*(k++))*lY, tr("Посетителей: ") + fNum(s.allVisitorsCount));
-		k++;
-		painter.drawText(Settings::i()->printHorizontalLineShift*lX, (lineShift + lineWrap*(k++))*lY, tr("Наличными входных: ") + fNum(s.cashIn));
-		painter.drawText(Settings::i()->printHorizontalLineShift*lX, (lineShift + lineWrap*(k++))*lY, tr("Наличными размещение гостей: ") + fNum(s.cashSit));
-		painter.drawText(Settings::i()->printHorizontalLineShift*lX, (lineShift + lineWrap*(k++))*lY, tr("Наличными питание:  ") + fNum(s.cashFood));
-		painter.drawText(Settings::i()->printHorizontalLineShift*lX, (lineShift + lineWrap*(k++))*lY, tr("Наличными за номера гостиницы: ") + fNum(s.cashHotel));
-		painter.drawText(Settings::i()->printHorizontalLineShift*lX, (lineShift + lineWrap*(k++))*lY, tr("Наличными доп. услуги: ") + fNum(s.cashAdditionalServices));
-		painter.drawText(Settings::i()->printHorizontalLineShift*lX, (lineShift + lineWrap*(k++))*lY, tr("Неплательщики ") + fNum(s.cashInvaders));
-		k++;
-		painter.drawText(Settings::i()->printHorizontalLineShift*lX, (lineShift + lineWrap*(k++))*lY, tr("Картами входных: ") + fNum(s.cardIn));
-		painter.drawText(Settings::i()->printHorizontalLineShift*lX, (lineShift + lineWrap*(k++))*lY, tr("Картами размещение гостей: ") + fNum(s.cardSit));
-		painter.drawText(Settings::i()->printHorizontalLineShift*lX, (lineShift + lineWrap*(k++))*lY, tr("Картами питание:  ") + fNum(s.cardFood));
-		painter.drawText(Settings::i()->printHorizontalLineShift*lX, (lineShift + lineWrap*(k++))*lY, tr("Картами за номера гостиницы: ") + fNum(s.cardHotel));
-		painter.drawText(Settings::i()->printHorizontalLineShift*lX, (lineShift + lineWrap*(k++))*lY, tr("Картами доп. услуги: ") + fNum(s.cardAdditionalServices));
-		k++;
-		painter.drawText(Settings::i()->printHorizontalLineShift*lX, (lineShift + lineWrap*(k++))*lY, tr("Инкассированно в банк: ") + fNum(s.cashToBank));
 		font.setBold(true);
 		painter.setFont(font);
-		painter.drawText(Settings::i()->printHorizontalLineShift*lX, (lineShift + lineWrap*(k++))*lY, tr("Итог наличными: ") + fNum(s.finalCash));
+		painter.drawText(Settings::i()->printHorizontalLineShift*lX, (lineShift + lineWrap*(k++))*lY, tr("Посетители:"));
+		font.setBold(false);
+		painter.setFont(font);
+		painter.drawText(Settings::i()->printHorizontalLineShift*lX, (lineShift + lineWrap*(k++))*lY, tr("Браслетов: ") + Settings::fNum(s.allKeysCount));
+		painter.drawText(Settings::i()->printHorizontalLineShift*lX, (lineShift + lineWrap*(k++))*lY, tr("Посетителей: ") + Settings::fNum(s.allVisitorsCount));
+		painter.drawText(Settings::i()->printHorizontalLineShift*lX, (lineShift + lineWrap*(k++))*lY, tr("Из них VIP: ")+Settings::fNum(s.vipVisitors));
+		painter.drawText(Settings::i()->printHorizontalLineShift*lX, (lineShift + lineWrap*(k++))*lY, tr("Потеряных заказов: ") + Settings::fNum(s.lostFolios.size()));
+		k++;
+		font.setBold(true);
+		painter.setFont(font);
+		painter.drawText(Settings::i()->printHorizontalLineShift*lX, (lineShift + lineWrap*(k++))*lY, tr("Разделение:"));
+		font.setBold(false);
+		painter.setFont(font);
+		painter.drawText(Settings::i()->printHorizontalLineShift*lX, (lineShift + lineWrap*(k++))*lY, tr("За вход (A): ") + Settings::fNum(s.allIn));
+		painter.drawText(Settings::i()->printHorizontalLineShift*lX, (lineShift + lineWrap*(k++))*lY, tr("За размещение гостей (R): ") + Settings::fNum(s.allSit));
+		painter.drawText(Settings::i()->printHorizontalLineShift*lX, (lineShift + lineWrap*(k++))*lY, tr("За питание (R): ") + Settings::fNum(s.allFood));
+		painter.drawText(Settings::i()->printHorizontalLineShift*lX, (lineShift + lineWrap*(k++))*lY, tr("За бар (R): ") + Settings::fNum(s.allBar));
+		painter.drawText(Settings::i()->printHorizontalLineShift*lX, (lineShift + lineWrap*(k++))*lY, tr("За за номера гостиницы (R): ") + Settings::fNum(s.allHotel));
+		painter.drawText(Settings::i()->printHorizontalLineShift*lX, (lineShift + lineWrap*(k++))*lY, tr("За бани и сауны (R): ") + Settings::fNum(s.allBath));
+		painter.drawText(Settings::i()->printHorizontalLineShift*lX, (lineShift + lineWrap*(k++))*lY, tr("За кальяны (R): ") + Settings::fNum(s.allHookah));
+		painter.drawText(Settings::i()->printHorizontalLineShift*lX, (lineShift + lineWrap*(k++))*lY, tr("Прочие услуги (R): ") + Settings::fNum(s.allAdditionalServices));
+		painter.drawText(Settings::i()->printHorizontalLineShift*lX, (lineShift + lineWrap*(k++))*lY, tr("С предыдущего дня (R): ") + Settings::fNum(s.diffFromPrevDay));
+		painter.drawText(Settings::i()->printHorizontalLineShift*lX, (lineShift + lineWrap*(k++))*lY, tr("Неплательщики (R): ") + Settings::fNum(s.allInvaders));
+		painter.drawText(Settings::i()->printHorizontalLineShift*lX, (lineShift + lineWrap*(k++))*lY, tr("Скидки (R): ") + Settings::fNum(s.allDiscounts));
+		k++;
+		font.setBold(true);
+		painter.setFont(font);
+		painter.drawText(Settings::i()->printHorizontalLineShift*lX, (lineShift + lineWrap*(k++))*lY, tr("Итоги:"));
+		font.setBold(false);
+		painter.setFont(font);
+		painter.drawText(Settings::i()->printHorizontalLineShift*lX, (lineShift + lineWrap*(k++))*lY, tr("Приход в инкассацию с предыдущего дня: ") + Settings::fNum(s.cashToBankPrev));
+		painter.drawText(Settings::i()->printHorizontalLineShift*lX, (lineShift + lineWrap*(k++))*lY, tr("Инкассированно за день: ") + Settings::fNum(s.cashToBank));
+		painter.drawText(Settings::i()->printHorizontalLineShift*lX, (lineShift + lineWrap*(k++))*lY, tr("Всего поступило в банк: ") + Settings::fNum(s.finalBank));
+		font.setBold(true);
+		painter.setFont(font);
+		painter.drawText(Settings::i()->printHorizontalLineShift*lX, (lineShift + lineWrap*(k++))*lY, tr("Расход по актам: ") + Settings::fNum(s.writeOffs));
+		painter.drawText(Settings::i()->printHorizontalLineShift*lX, (lineShift + lineWrap*(k++))*lY, tr("Итог наличными: ") + Settings::fNum(s.finalCash));
 		font.setBold(false);
 		painter.setFont(font);
 

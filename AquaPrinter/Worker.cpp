@@ -22,39 +22,48 @@ Worker::~Worker()
 {
 	//_sqlBase.commit();
 	_sqlBase.close();
-	_sqlBase.removeDatabase(Settings::i()->fsqlConname);
+	//_sqlBase.removeDatabase(Settings::i()->fsqlConname);
 	_rkBase.close();
-	_rkBase.removeDatabase(Settings::i()->rkConname);
+	//_rkBase.removeDatabase(Settings::i()->rkConname);
 	emit workFinished();
 }
 
 void Worker::checkConnection()
 {
-	while (!_sqlBase.isOpen())
+	qint64 count = 0;
+	if (!_sqlBase.isOpen() && count<Settings::i()->sqlRetries)
 	{
+		count++;
+		emit fbsqllStateChanged(SQL_STATES::CONNECTING);
 		if (_sqlBase.open())
 		{
-			emit fbsqllStateChanged(true);
+			emit fbsqllStateChanged(SQL_STATES::CONNECTED);
 			qInfo() << ("Sucsesfully connected to database: " + Settings::i()->fsqlBaseName);
-			break;
+			//break;
 		}
-		QThread::msleep(Settings::i()->sqlUpdateTimer);
-		QApplication::processEvents();
+		else
+			emit fbsqllStateChanged(SQL_STATES::NOT_CONNECTED);
+		//QThread::msleep(Settings::i()->sqlUpdateTimer);
+		//QApplication::processEvents();
 	}
 }
 
 void Worker::checkConnectionRk()
 {
-	while (!_rkBase.isOpen())
+	qint64 count = 0;
+	if (!_rkBase.isOpen() && count<Settings::i()->sqlRetries)
 	{
+		count++;
+		emit mssqlStateChanged(SQL_STATES::CONNECTING);
 		if (_rkBase.open())
 		{
-			emit mssqlStateChanged(true);
+			emit mssqlStateChanged(SQL_STATES::CONNECTED);
 			qInfo() << ("Sucsesfully connected to database: " + Settings::i()->rkBaseName);
-			break;
 		}
-		QThread::msleep(Settings::i()->sqlUpdateTimer);
-		QApplication::processEvents();
+		else
+			emit mssqlStateChanged(SQL_STATES::NOT_CONNECTED);
+		//QThread::msleep(Settings::i()->sqlUpdateTimer);
+		//QApplication::processEvents();
 	}
 }
 
@@ -66,6 +75,7 @@ bool Worker::init()
 	_sqlBase.setDatabaseName(_baseName);
 	_sqlBase.setUserName(_name);
 	_sqlBase.setPassword(_pass);
+	emit fbsqllStateChanged(SQL_STATES::CONNECTING);
 	return _sqlBase.open();
 }
 
@@ -77,6 +87,7 @@ bool Worker::initRk()
 	_rkBase.setDatabaseName(_rkBaseName);
 	_rkBase.setUserName(_rkName);
 	_rkBase.setPassword(_rkPass);
+	emit mssqlStateChanged(SQL_STATES::CONNECTING);
 	return _rkBase.open();
 }
 
@@ -87,11 +98,11 @@ void Worker::run()
 		qInfo() << (QCoreApplication::libraryPaths().join('_'));
 		qInfo() << ("Error while connecting to database:");
 		qInfo() << (_sqlBase.lastError().text());
-		emit fbsqllStateChanged(false);
+		emit fbsqllStateChanged(SQL_STATES::NOT_CONNECTED);
 	}
 	else
 	{
-		emit fbsqllStateChanged(true);
+		emit fbsqllStateChanged(CONNECTED);
 		qInfo() << ("Sucsesfully connected to database: " + Settings::i()->fsqlBaseName);
 	}
 
@@ -101,11 +112,11 @@ void Worker::run()
 		qInfo() << ("Error while connecting to database:");
 		QString t = _rkBase.lastError().text();
 		qInfo() << (t);
-		emit mssqlStateChanged(false);
+		emit mssqlStateChanged(NOT_CONNECTED);
 	}
 	else
 	{
-		emit mssqlStateChanged(true);
+		emit mssqlStateChanged(CONNECTED);
 		qInfo() << ("Sucsesfully connected to database: " + Settings::i()->rkBaseName);
 	}
 }
@@ -165,429 +176,152 @@ void Worker::getInfo(QDate date)
 
 	if (!found)
 	{
+		emit updateProgressBar();
+		checkConnectionRk();
+		emit updateProgressBar();
+		checkConnection();
+		emit updateProgressBar();
 		AllData d;
-		QVector<quint64> sit = getSits(date);
-		emit updateProgressBar();
-		QVector<quint64> food = getKitchen(date);
-		emit updateProgressBar();
-		QVector<quint64> hotel = getHotel(date);
-		emit updateProgressBar();
-		QVector<quint64> baths = getBath(date);
-		emit updateProgressBar();
-		QVector<quint64> hookah = getHookah(date);
-		emit updateProgressBar();
-		QVector<quint64> additionalServices = getAdditionalServices(date);
-		emit updateProgressBar();
+		//QVector<QVector<qint64>> orders = getPayments(date);
 		d.date = date;
-		d.blueCash =  getBlueCash(date);
+
+		d.blueCash = universalSql(Settings::i()->blueCash, date);
+		emit updateProgressBar();
+
 		d.blueCashOrig = d.blueCash;
 		emit updateProgressBar();
-		d.blueCard = getBlueCard(date);
+
+		d.blueCard = universalSql(Settings::i()->blueCard, date);
 		emit updateProgressBar();
+
 		d.blueCardOrig = d.blueCard;
-		d.blueAll = d.blueCard+d.blueCash;
+		emit updateProgressBar();
+
+		d.blueAll = d.blueCash+d.blueCard;
+		emit updateProgressBar();
+
 		d.blueAllOrig = d.blueAll;
 		emit updateProgressBar();
-		d.whiteCash = getWhiteCash(date);
+
+		d.blueDisc = universalSql(Settings::i()->blueDisc, date);
 		emit updateProgressBar();
+
+		d.whiteCash = universalSql(Settings::i()->whiteCash, date);
+		emit updateProgressBar();
+
 		d.whiteCashOrig = d.whiteCash;
-		d.whiteCard = getWhiteCard(date);
 		emit updateProgressBar();
+
+		d.whiteCard = universalSql(Settings::i()->whiteCard, date);
+		emit updateProgressBar();
+
 		d.whiteCardOrig = d.whiteCard;
+		emit updateProgressBar();
+
 		d.whiteAll = d.whiteCard+d.whiteCash;
+		emit updateProgressBar();
+
 		d.whiteAllOrig = d.whiteAll;
-		d.allKeysCount = getAllKeysCount(date);
 		emit updateProgressBar();
-		d.allVisitorsCount = getAllVisitorsCount(date);
+
+		d.whiteDisc = universalSql(Settings::i()->whiteDisc, date);
 		emit updateProgressBar();
-		d.cashIn = getCashIn(date);
+
+		d.allKeysCount = universalSql(Settings::i()->incomeCards, date);
 		emit updateProgressBar();
-		d.cashSit = getCashSit(date, sit);
+
+		d.allVisitorsCount = universalSql(Settings::i()->allVisitorsCount, date);
 		emit updateProgressBar();
-		d.cashFood = getCashFood(date, sit);
+
+		d.allIn = universalSql(Settings::i()->allIn, date);
 		emit updateProgressBar();
-		d.cashHotel = getCashHotel(date, hotel);
+
+		d.allSit = universalSqlRk(Settings::i()->rkSittings, date);
 		emit updateProgressBar();
-		d.cashAdditionalServices = getCashAdditionalService(date, additionalServices);
+
+		d.allFood = universalSqlRk(Settings::i()->rkKitchen, date);
 		emit updateProgressBar();
-		d.cashInvaders = cashGetVIP(date);
+
+		d.allBar = universalSqlRk(Settings::i()->rkBar, date);
 		emit updateProgressBar();
-		d.cardIn = getCardIn(date);
+
+		d.allHotel = universalSqlRk(Settings::i()->rkHotel, date);
 		emit updateProgressBar();
-		d.cardSit = getCardSit(date, sit);
+
+		d.allInvaders = universalSqlRk(Settings::i()->rkInvaders, date);
 		emit updateProgressBar();
-		d.cardFood = getCardFood(date, food);
+
+		d.allDiscounts = universalSqlRk(Settings::i()->rkDiscounts, date);
 		emit updateProgressBar();
-		d.cardHotel = getCardHotel(date, hotel);
+		
+		d.allHookah = universalSqlRk(Settings::i()->rkHookahs, date);
 		emit updateProgressBar();
-		d.cardAdditionalServices = getCardAdditionalService(date, additionalServices);
+
+		d.allBath = universalSqlRk(Settings::i()->rkBaths, date);
 		emit updateProgressBar();
-		d.finalCash = d.whiteCash + d.blueCash;
-		//storage.append(d);
+		
+		//d.allAdditionalServices = sumAll - other;
+		d.allAdditionalServices = universalSqlRk(Settings::i()->rkAdditionalServices, date);
+		emit updateProgressBar();
+
+		qint64 sumAll = d.blueAll + d.whiteAll;
+		qint64 other = d.allIn + d.allSit + d.allFood + d.allBar + d.allHotel + d.allHookah + d.allBath+d.allAdditionalServices;
+		d.diffFromPrevDay = other - sumAll;
+
+		d.cashToBank = 0;
+		emit updateProgressBar();
+
+		d.cashToBankPrev = 0;
+		emit updateProgressBar();
+
+		d.finalBank = d.cashToBankPrev+d.cashToBank+d.blueCard+d.whiteCard;
+		emit updateProgressBar();
+		
+		d.finalCash = d.whiteAll + d.blueAll-d.cashToBank;
+		d.writeOffs = 0;
+		d.lostFolios = getLostFolios(date);
+
+		emit updateProgressBar();
 		fq.clear();
-		emit updateProgressBar();
 		emit haveInfo(d);
 	}
 }
 
-/*qint64 Worker::getBlueAll(QDate date)
+qint64 Worker::universalSql(QString src, QDate date)
 {
+	//checkConnection();
 	qint64 res = 0;
-	
-	QString qq = fillReq(Settings::i()->blueAll);
-	qq.append(QString::number(day));
-	qq.append(".%';");
+	QString qq = fillReq(src, date);
 	fq = _sqlBase.exec(qq);
 	ferr = fq.lastError();
 	if (ferr.text().size() > 1)
 		qWarning() << ("SQL Error: " + ferr.text());
 	if (fq.next())
 	{
-		QString sss = fq.record().value(0).toString();
-		res = sss.toLongLong();
+		//QString sss = fq.record().value(0).toString();
+		res = fq.record().value(0).toLongLong();
 	}
 	else
-		qDebug() << ("No results from firebird database while selecting !");
-	return res;
-}*/
-
-qint64 Worker::getBlueCash(QDate date)
-{
-	qint64 res = 0;
-	
-	QString qq = fillReq(Settings::i()->blueCash, date);
-	fq = _sqlBase.exec(qq);
-	ferr = fq.lastError();
-	if (ferr.text().size() > 1)
-		qWarning() << ("SQL Error: " + ferr.text());
-	if (fq.next())
-	{
-		QString sss = fq.record().value(0).toString();
-		res = sss.toLongLong();
-	}
-	else
-		qDebug() << ("No results from firebird database while selecting !");
+		qDebug() << "No results from firebird database for request: "+src;
 	return res;
 }
 
-qint64 Worker::getBlueCard(QDate date)
+qint64 Worker::universalSqlRk(QString src, QDate date)
 {
+	//checkConnectionRk();
 	qint64 res = 0;
-	
-	QString qq = fillReq(Settings::i()->blueCard, date);
-	fq = _sqlBase.exec(qq);
-	ferr = fq.lastError();
-	if (ferr.text().size() > 1)
-		qWarning() << ("SQL Error: " + ferr.text());
-	if (fq.next())
-	{
-		QString sss = fq.record().value(0).toString();
-		res = sss.toLongLong();
-	}
-	else
-		qDebug() << ("No results from firebird database while selecting !");
-	return res;
-}
-
-/*qint64 Worker::getWhiteAll(QDate date)
-{
-	qint64 res = 0;
-	
-	QString qq = fillReq(Settings::i()->whiteAll, date);
-	fq = _sqlBase.exec(qq);
-	ferr = fq.lastError();
-	if (ferr.text().size() > 1)
-		qWarning() << ("SQL Error: " + ferr.text());
-	if (fq.next())
-	{
-		QString sss = fq.record().value(0).toString();
-	}
-	else
-		qDebug() << ("No results from firebird database while selecting !");
-	return res;
-}*/
-
-qint64 Worker::getWhiteCash(QDate date)
-{
-	qint64 res = 0;
-	
-	QString qq = fillReq(Settings::i()->whiteCash, date);
-	fq = _sqlBase.exec(qq);
-	ferr = fq.lastError();
-	if (ferr.text().size() > 1)
-		qWarning() << ("SQL Error: " + ferr.text());
-	if (fq.next())
-	{
-		QString sss = fq.record().value(0).toString();
-		res = sss.toLongLong();
-	}
-	else
-		qDebug() << ("No results from firebird database while selecting !");
-	return res;
-}
-
-qint64 Worker::getWhiteCard(QDate date)
-{
-	qint64 res = 0;
-	
-	QString qq = fillReq(Settings::i()->whiteCard, date);
-	fq = _sqlBase.exec(qq);
-	ferr = fq.lastError();
-	if (ferr.text().size() > 1)
-		qWarning() << ("SQL Error: " + ferr.text());
-	if (fq.next())
-	{
-		QString sss = fq.record().value(0).toString();
-		res = sss.toLongLong();
-	}
-	else
-		qDebug() << ("No results from firebird database while selecting !");
-	return res;
-}
-
-qint64 Worker::getAllKeysCount(QDate date)
-{
-	qint64 res = 0;
-	
-	QString qq = fillReq(Settings::i()->incomeCards, date);
-	fq = _sqlBase.exec(qq);
-	ferr = fq.lastError();
-	if (ferr.text().size() > 1)
-		qWarning() << ("SQL Error: " + ferr.text());
-	if (fq.next())
-	{
-		QString sss = fq.record().value(0).toString();
-		res = sss.toLongLong();
-	}
-	else
-		qDebug() << ("No results from firebird database while selecting !");
-	return res;
-}
-
-qint64 Worker::getAllVisitorsCount(QDate date)
-{
-	qint64 res = 0;
-	
-	QString qq = fillReq(Settings::i()->allVisitorsCount, date);
-	fq = _sqlBase.exec(qq);
-	ferr = fq.lastError();
-	if (ferr.text().size() > 1)
-		qWarning() << ("SQL Error: " + ferr.text());
-	if (fq.next())
-	{
-		QString sss = fq.record().value(0).toString();
-		res = sss.toLongLong();
-	}
-	else
-		qDebug() << ("No results from firebird database while selecting !");
-	return res;
-}
-
-qint64 Worker::getCashIn(QDate date)
-{
-	qint64 res = 0;
-	
-	QString qq = fillReq(Settings::i()->cashIn, date);
-	fq = _sqlBase.exec(qq);
-	ferr = fq.lastError();
-	if (ferr.text().size() > 1)
-		qWarning() << ("SQL Error: " + ferr.text());
-	if (fq.next())
-	{
-		QString sss = fq.record().value(0).toString();
-		res = sss.toLongLong();
-	}
-	else
-		qDebug() << ("No results from firebird database while selecting !");
-	return res;
-}
-
-qint64 Worker::getCashSit(QDate date, QVector<quint64> orders)
-{
-	qint64 res = 0;
-	
-	QString qq = fillReq(Settings::i()->cashSit, date);
-	fq = _sqlBase.exec(qq);
-	ferr = fq.lastError();
-	if (ferr.text().size() > 1)
-		qWarning() << ("SQL Error: " + ferr.text());
-	if (fq.next())
-	{
-		QString sss = fq.record().value(0).toString();
-		res = sss.toLongLong();
-	}
-	else
-		qDebug() << ("No results from firebird database while selecting !");
-	return res;
-}
-
-qint64 Worker::getCashFood(QDate date, QVector<quint64> orders)
-{
-	qint64 res = 0;
-	
-	QString qq = fillReq(Settings::i()->cashFood, date);
-	fq = _sqlBase.exec(qq);
-	ferr = fq.lastError();
-	if (ferr.text().size() > 1)
-		qWarning() << ("SQL Error: " + ferr.text());
-	if (fq.next())
-	{
-		QString sss = fq.record().value(0).toString();
-		res = sss.toLongLong();
-	}
-	else
-		qDebug() << ("No results from firebird database while selecting !");
-	return res;
-}
-
-qint64 Worker::getCashHotel(QDate date, QVector<quint64> orders)
-{
-	qint64 res = 0;
-	
-	QString qq = fillReq(Settings::i()->cashHotel, date);
-	fq = _sqlBase.exec(qq);
-	ferr = fq.lastError();
-	if (ferr.text().size() > 1)
-		qWarning() << ("SQL Error: " + ferr.text());
-	if (fq.next())
-	{
-		QString sss = fq.record().value(0).toString();
-		res = sss.toLongLong();
-	}
-	else
-		qDebug() << ("No results from firebird database while selecting !");
-	return res;
-}
-
-qint64 Worker::getCashAdditionalService(QDate date, QVector<quint64> orders)
-{
-	qint64 res = 0;
-	
-	QString qq = fillReq(Settings::i()->cashAdditionalServices, date);
-	fq = _sqlBase.exec(qq);
-	ferr = fq.lastError();
-	if (ferr.text().size() > 1)
-		qWarning() << ("SQL Error: " + ferr.text());
-	if (fq.next())
-	{
-		QString sss = fq.record().value(0).toString();
-		res = sss.toLongLong();
-	}
-	else
-		qDebug() << ("No results from firebird database while selecting !");
-	return res;
-}
-
-qint64 Worker::cashGetVIP(QDate date)
-{
-	qint64 res = 0;
-	
-	QString qq = fillReqRk(Settings::i()->rkInvaders, date);
+	QString qq = fillReqRk(src, date);
 	rq = _rkBase.exec(qq);
 	rerr = rq.lastError();
 	if (rerr.text().size() > 1)
 		qWarning() << ("SQL Error: " + rerr.text());
 	if (rq.next())
 	{
-		QString sss = rq.record().value(0).toString();
-		res = sss.toLongLong();
+		//QString sss = rq.record().value(0).toString();
+		res = rq.record().value(0).toLongLong();
 	}
 	else
-		qDebug() << ("No results from firebird database while selecting !");
-	return res;
-}
-
-qint64 Worker::getCardIn(QDate date)
-{
-	qint64 res = 0;
-	
-	QString qq = fillReq(Settings::i()->cardIn, date);
-	fq = _sqlBase.exec(qq);
-	ferr = fq.lastError();
-	if (ferr.text().size() > 1)
-		qWarning() << ("SQL Error: " + ferr.text());
-	if (fq.next())
-	{
-		QString sss = fq.record().value(0).toString();
-		res = sss.toLongLong();
-	}
-	else
-		qDebug() << ("No results from firebird database while selecting !");
-	return res;
-}
-
-qint64 Worker::getCardSit(QDate date, QVector<quint64> orders)
-{
-	qint64 res = 0;
-	
-	QString qq = fillReq(Settings::i()->cardSit, date);
-	fq = _sqlBase.exec(qq);
-	ferr = fq.lastError();
-	if (ferr.text().size() > 1)
-		qWarning() << ("SQL Error: " + ferr.text());
-	if (fq.next())
-	{
-		QString sss = fq.record().value(0).toString();
-		res = sss.toLongLong();
-	}
-	else
-		qDebug() << ("No results from firebird database while selecting !");
-	return res;
-}
-
-qint64 Worker::getCardFood(QDate date, QVector<quint64> orders)
-{
-	qint64 res = 0;
-	
-	QString qq = fillReq(Settings::i()->cardFood, date);
-	fq = _sqlBase.exec(qq);
-	ferr = fq.lastError();
-	if (ferr.text().size() > 1)
-		qWarning() << ("SQL Error: " + ferr.text());
-	if (fq.next())
-	{
-		QString sss = fq.record().value(0).toString();
-		res = sss.toLongLong();
-	}
-	else
-		qDebug() << ("No results from firebird database while selecting !");
-	return res;
-}
-
-qint64 Worker::getCardHotel(QDate date, QVector<quint64> orders)
-{
-	qint64 res = 0;
-	
-	QString qq = fillReq(Settings::i()->cardHotel, date);
-	fq = _sqlBase.exec(qq);
-	ferr = fq.lastError();
-	if (ferr.text().size() > 1)
-		qWarning() << ("SQL Error: " + ferr.text());
-	if (fq.next())
-	{
-		QString sss = fq.record().value(0).toString();
-		res = sss.toLongLong();
-	}
-	else
-		qDebug() << ("No results from firebird database while selecting !");
-	return res;
-}
-
-qint64 Worker::getCardAdditionalService(QDate date, QVector<quint64> orders)
-{
-	qint64 res = 0;
-	QString qq = fillReq(Settings::i()->cardAdditionalServices, date);
-	fq = _sqlBase.exec(qq);
-	ferr = fq.lastError();
-	if (ferr.text().size() > 1)
-		qWarning() << ("SQL Error: " + ferr.text());
-	if (fq.next())
-	{
-		QString sss = fq.record().value(0).toString();
-		res = sss.toLongLong();
-	}
-	else
-		qDebug() << ("No results from firebird database while selecting !");
+		qDebug() << "No results from mssql database for request: " + src;
 	return res;
 }
 
@@ -598,7 +332,7 @@ QString Worker::fillReq(QString src, QDate date)
 	QString res = "";
 	qint64 day = dateToInt(date);
 	if (src.size()>0)
-		for (quint64 i = 0; i < src.size(); i++)
+		for (qint64 i = 0; i < src.size(); i++)
 		{
 			if (src.at(i) == '?')
 				res.append(QString::number(day*1.0 + Settings::i()->addTime));
@@ -615,10 +349,16 @@ QString Worker::fillReqRk(QString src, QDate date)
 	// '?' - curday
 	// '~' - curday+1
 	QString res = "";
-	QString day = date.toString("yyyyMMdd");
-	QString dayNext = date.addDays(1).toString("yyyyMMdd");
+	QDateTime d1;
+	d1.setDate(date);
+	d1.setTime(QTime::fromString(Settings::i()->addTimeRk, Settings::i()->timeFormatRk));
+	QDateTime d2;
+	d2.setDate(date.addDays(1));
+	d2.setTime(QTime::fromString(Settings::i()->addTimeRk, Settings::i()->timeFormatRk));
+	QString day = d1.toString(Settings::i()->dateFormatRk);
+	QString dayNext = d2.toString(Settings::i()->dateFormatRk);
 	if (src.size()>0)
-		for (quint64 i = 0; i < src.size(); i++)
+		for (qint64 i = 0; i < src.size(); i++)
 		{
 			if (src.at(i) == '?')
 				res.append(day);
@@ -630,82 +370,12 @@ QString Worker::fillReqRk(QString src, QDate date)
 	return res;
 }
 
-QVector<quint64> Worker::getAdditionalServices(QDate date)
+qint64 Worker::cashByFolio(qint64 folio)
 {
-	QVector<quint64> res;
-	QString qq = fillReq(Settings::i()->cardHotel, date);
-	fq = _sqlBase.exec(qq);
-	ferr = fq.lastError();
-	if (ferr.text().size() > 1)
-		qWarning() << ("SQL Error: " + ferr.text());
-	if (fq.next())
-	{
-		QString sss = fq.record().value(0).toString();
-		res.append(sss.toLongLong());
-	}
-	else
-		qDebug() << ("No results from firebird database while selecting !");
-	return res;
-}
-
-QVector<quint64> Worker::getSits(QDate date)
-{
-	QVector<quint64> res;
-	QString qq = fillReq(Settings::i()->cardHotel, date);
-	fq = _sqlBase.exec(qq);
-	ferr = fq.lastError();
-	if (ferr.text().size() > 1)
-		qWarning() << ("SQL Error: " + ferr.text());
-	if (fq.next())
-	{
-		QString sss = fq.record().value(0).toString();
-		res.append(sss.toLongLong());
-	}
-	else
-		qDebug() << ("No results from firebird database while selecting !");
-	return res;
-}
-
-QVector<quint64> Worker::getKitchen(QDate date)
-{
-	QVector<quint64> res;
-	QString qq = fillReq(Settings::i()->cardHotel, date);
-	fq = _sqlBase.exec(qq);
-	ferr = fq.lastError();
-	if (ferr.text().size() > 1)
-		qWarning() << ("SQL Error: " + ferr.text());
-	if (fq.next())
-	{
-		QString sss = fq.record().value(0).toString();
-		res.append(sss.toLongLong());
-	}
-	else
-		qDebug() << ("No results from firebird database while selecting !");
-	return res;
-}
-
-QVector<quint64> Worker::getHotel(QDate date)
-{
-	QVector<quint64> res;
-	QString qq = fillReq(Settings::i()->cardHotel, date);
-	fq = _sqlBase.exec(qq);
-	ferr = fq.lastError();
-	if (ferr.text().size() > 1)
-		qWarning() << ("SQL Error: " + ferr.text());
-	if (fq.next())
-	{
-		QString sss = fq.record().value(0).toString();
-		res.append(sss.toLongLong());
-	}
-	else
-		qDebug() << ("No results from firebird database while selecting !");
-	return res;
-}
-
-qint64 Worker::getCardBaths(QDate date, QVector<quint64> orders)
-{
-	qint64 res;
-	QString qq = fillReq(Settings::i()->cardHotel, date);
+	qint64 res = 0;
+	QString qq = Settings::i()->cashByFolio;
+	qq.append(QString::number(folio));
+	qq.append(";");
 	fq = _sqlBase.exec(qq);
 	ferr = fq.lastError();
 	if (ferr.text().size() > 1)
@@ -720,10 +390,12 @@ qint64 Worker::getCardBaths(QDate date, QVector<quint64> orders)
 	return res;
 }
 
-qint64 Worker::getCardHookah(QDate date, QVector<quint64> orders)
+qint64 Worker::cardByFolio(qint64 folio)
 {
-	qint64 res;
-	QString qq = fillReq(Settings::i()->cardHotel, date);
+	qint64 res = 0;
+	QString qq = Settings::i()->cardByFolio;
+	qq.append(QString::number(folio));
+	qq.append(";");
 	fq = _sqlBase.exec(qq);
 	ferr = fq.lastError();
 	if (ferr.text().size() > 1)
@@ -738,38 +410,28 @@ qint64 Worker::getCardHookah(QDate date, QVector<quint64> orders)
 	return res;
 }
 
-qint64 Worker::getCashBaths(QDate date, QVector<quint64> orders)
+QVector<QVector<qint64>> Worker::getLostFolios(QDate date)
 {
-	qint64 res;
-	QString qq = fillReq(Settings::i()->cardHotel, date);
+	QVector<QVector<qint64>> res; // folio, cost, rk_id
+	
+	QString qq = fillReq(Settings::i()->lostFolios, date);
 	fq = _sqlBase.exec(qq);
 	ferr = fq.lastError();
 	if (ferr.text().size() > 1)
 		qWarning() << ("SQL Error: " + ferr.text());
-	if (fq.next())
+	while (fq.next())
 	{
-		QString sss = fq.record().value(0).toString();
-		res = sss.toLongLong();
+		qint64 folio = fq.record().value(0).toLongLong();
+		qint64 cost = fq.record().value(1).toLongLong();
+		QString info = fq.record().value(2).toString();
+		QStringList ss = info.split(':');
+		if (ss.size() > 1)
+		{
+			qint64 order = ss.at(1).toLongLong();
+			res.append(QVector<qint64>({folio, cost, order}));
+		}
+		else
+			res.append(QVector<qint64>({ folio, cost, 0 }));
 	}
-	else
-		qDebug() << ("No results from firebird database while selecting !");
-	return res;
-}
-
-qint64 Worker::getCashHookah(QDate date, QVector<quint64> orders)
-{
-	qint64 res;
-	QString qq = fillReq(Settings::i()->cardHotel, date);
-	fq = _sqlBase.exec(qq);
-	ferr = fq.lastError();
-	if (ferr.text().size() > 1)
-		qWarning() << ("SQL Error: " + ferr.text());
-	if (fq.next())
-	{
-		QString sss = fq.record().value(0).toString();
-		res = sss.toLongLong();
-	}
-	else
-		qDebug() << ("No results from firebird database while selecting !");
 	return res;
 }

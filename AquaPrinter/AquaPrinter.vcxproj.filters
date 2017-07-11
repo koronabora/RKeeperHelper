@@ -114,6 +114,9 @@
     <CustomBuild Include="AllData.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
+    <CustomBuild Include="LostFoliosInfo.ui">
+      <Filter>Form Files</Filter>
+    </CustomBuild>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GeneratedFiles\ui_AquaPrinter.h">
@@ -121,6 +124,9 @@
     </ClInclude>
     <ClInclude Include="resource.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneratedFiles\ui_LostFoliosInfo.h">
+      <Filter>Generated Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1056</width>
-    <height>1074</height>
+    <width>1340</width>
+    <height>1363</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -19,6 +19,18 @@
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QGridLayout" name="gridLayout_2">
+    <property name="leftMargin">
+     <number>0</number>
+    </property>
+    <property name="topMargin">
+     <number>0</number>
+    </property>
+    <property name="rightMargin">
+     <number>0</number>
+    </property>
+    <property name="bottomMargin">
+     <number>0</number>
+    </property>
     <item row="0" column="0">
      <widget class="QFrame" name="frame">
       <property name="frameShape">
@@ -28,8 +40,29 @@
        <enum>QFrame::Raised</enum>
       </property>
       <layout class="QGridLayout" name="gridLayout">
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
+       <property name="spacing">
+        <number>0</number>
+       </property>
        <item row="0" column="2">
         <widget class="QFrame" name="frame_2">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>0</height>
+          </size>
+         </property>
          <property name="frameShape">
           <enum>QFrame::StyledPanel</enum>
          </property>
@@ -77,51 +110,6 @@
               </widget>
              </item>
              <item>
-              <widget class="QLabel" name="label_3">
-               <property name="maximumSize">
-                <size>
-                 <width>16777215</width>
-                 <height>30</height>
-                </size>
-               </property>
-               <property name="text">
-                <string>Всего:</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QSpinBox" name="blueAllEdit">
-               <property name="readOnly">
-                <bool>true</bool>
-               </property>
-               <property name="buttonSymbols">
-                <enum>QAbstractSpinBox::NoButtons</enum>
-               </property>
-               <property name="showGroupSeparator" stdset="0">
-                <bool>true</bool>
-               </property>
-               <property name="minimum">
-                <number>-999999999</number>
-               </property>
-               <property name="maximum">
-                <number>999999999</number>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLabel" name="blueOriginalLabel">
-               <property name="maximumSize">
-                <size>
-                 <width>16777215</width>
-                 <height>20</height>
-                </size>
-               </property>
-               <property name="text">
-                <string/>
-               </property>
-              </widget>
-             </item>
-             <item>
               <widget class="QLabel" name="label_4">
                <property name="maximumSize">
                 <size>
@@ -130,7 +118,7 @@
                 </size>
                </property>
                <property name="text">
-                <string>Из них наличными:</string>
+                <string>Наличными:</string>
                </property>
               </widget>
              </item>
@@ -199,6 +187,90 @@
                </property>
               </widget>
              </item>
+             <item>
+              <widget class="QLabel" name="label_3">
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>30</height>
+                </size>
+               </property>
+               <property name="text">
+                <string>Всего:</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QSpinBox" name="blueAllEdit">
+               <property name="readOnly">
+                <bool>true</bool>
+               </property>
+               <property name="buttonSymbols">
+                <enum>QAbstractSpinBox::NoButtons</enum>
+               </property>
+               <property name="showGroupSeparator" stdset="0">
+                <bool>true</bool>
+               </property>
+               <property name="minimum">
+                <number>-999999999</number>
+               </property>
+               <property name="maximum">
+                <number>999999999</number>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="blueOriginalLabel">
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>20</height>
+                </size>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="Line" name="line_10">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="label_18">
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>30</height>
+                </size>
+               </property>
+               <property name="text">
+                <string>Скидки и возвраты:</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QSpinBox" name="blueDisc">
+               <property name="readOnly">
+                <bool>true</bool>
+               </property>
+               <property name="buttonSymbols">
+                <enum>QAbstractSpinBox::NoButtons</enum>
+               </property>
+               <property name="showGroupSeparator" stdset="0">
+                <bool>true</bool>
+               </property>
+               <property name="minimum">
+                <number>-999999999</number>
+               </property>
+               <property name="maximum">
+                <number>999999999</number>
+               </property>
+              </widget>
+             </item>
             </layout>
            </widget>
           </item>
@@ -249,60 +321,6 @@
               </widget>
              </item>
              <item>
-              <widget class="QLabel" name="label_5">
-               <property name="maximumSize">
-                <size>
-                 <width>16777215</width>
-                 <height>30</height>
-                </size>
-               </property>
-               <property name="text">
-                <string>Всего:</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QSpinBox" name="whiteAllEdit">
-               <property name="enabled">
-                <bool>true</bool>
-               </property>
-               <property name="wrapping">
-                <bool>false</bool>
-               </property>
-               <property name="alignment">
-                <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-               </property>
-               <property name="readOnly">
-                <bool>true</bool>
-               </property>
-               <property name="buttonSymbols">
-                <enum>QAbstractSpinBox::NoButtons</enum>
-               </property>
-               <property name="showGroupSeparator" stdset="0">
-                <bool>true</bool>
-               </property>
-               <property name="minimum">
-                <number>-999999999</number>
-               </property>
-               <property name="maximum">
-                <number>999999999</number>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLabel" name="whiteAllOriginalLabel">
-               <property name="maximumSize">
-                <size>
-                 <width>16777215</width>
-                 <height>20</height>
-                </size>
-               </property>
-               <property name="text">
-                <string/>
-               </property>
-              </widget>
-             </item>
-             <item>
               <widget class="QLabel" name="label_6">
                <property name="maximumSize">
                 <size>
@@ -311,7 +329,7 @@
                 </size>
                </property>
                <property name="text">
-                <string>Из них наличными:</string>
+                <string>Наличными:</string>
                </property>
               </widget>
              </item>
@@ -380,6 +398,99 @@
                </property>
               </widget>
              </item>
+             <item>
+              <widget class="QLabel" name="label_5">
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>30</height>
+                </size>
+               </property>
+               <property name="text">
+                <string>Всего:</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QSpinBox" name="whiteAllEdit">
+               <property name="enabled">
+                <bool>true</bool>
+               </property>
+               <property name="wrapping">
+                <bool>false</bool>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+               </property>
+               <property name="readOnly">
+                <bool>true</bool>
+               </property>
+               <property name="buttonSymbols">
+                <enum>QAbstractSpinBox::NoButtons</enum>
+               </property>
+               <property name="showGroupSeparator" stdset="0">
+                <bool>true</bool>
+               </property>
+               <property name="minimum">
+                <number>-999999999</number>
+               </property>
+               <property name="maximum">
+                <number>999999999</number>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="whiteAllOriginalLabel">
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>20</height>
+                </size>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="Line" name="line_11">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="label_19">
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>30</height>
+                </size>
+               </property>
+               <property name="text">
+                <string>Скидки и возвраты:</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QSpinBox" name="whiteDisc">
+               <property name="readOnly">
+                <bool>true</bool>
+               </property>
+               <property name="buttonSymbols">
+                <enum>QAbstractSpinBox::NoButtons</enum>
+               </property>
+               <property name="showGroupSeparator" stdset="0">
+                <bool>true</bool>
+               </property>
+               <property name="minimum">
+                <number>-999999999</number>
+               </property>
+               <property name="maximum">
+                <number>999999999</number>
+               </property>
+              </widget>
+             </item>
             </layout>
            </widget>
           </item>
@@ -388,6 +499,12 @@
        </item>
        <item row="0" column="0" colspan="2">
         <widget class="QFrame" name="frame_10">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>0</height>
+          </size>
+         </property>
          <property name="frameShape">
           <enum>QFrame::StyledPanel</enum>
          </property>
@@ -472,13 +589,16 @@
                <property name="text">
                 <string>Всего браслетов:</string>
                </property>
+               <property name="alignment">
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
               </widget>
              </item>
              <item>
               <widget class="QSpinBox" name="allKeysCount">
                <property name="maximumSize">
                 <size>
-                 <width>200</width>
+                 <width>100</width>
                  <height>16777215</height>
                 </size>
                </property>
@@ -499,7 +619,62 @@
                </property>
               </widget>
              </item>
+             <item>
+              <widget class="QLabel" name="label_32">
+               <property name="maximumSize">
+                <size>
+                 <width>150</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="text">
+                <string>Потеряных заказов:</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QSpinBox" name="lostFolios">
+               <property name="maximumSize">
+                <size>
+                 <width>100</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="readOnly">
+                <bool>true</bool>
+               </property>
+               <property name="buttonSymbols">
+                <enum>QAbstractSpinBox::NoButtons</enum>
+               </property>
+               <property name="showGroupSeparator" stdset="0">
+                <bool>true</bool>
+               </property>
+               <property name="maximum">
+                <number>9999999</number>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="lostFoliosButton">
+               <property name="maximumSize">
+                <size>
+                 <width>75</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="text">
+                <string>...</string>
+               </property>
+              </widget>
+             </item>
             </layout>
+           </widget>
+          </item>
+          <item>
+           <widget class="Line" name="line_9">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
            </widget>
           </item>
           <item>
@@ -512,6 +687,35 @@
             </property>
             <layout class="QHBoxLayout" name="horizontalLayout_4">
              <item>
+              <widget class="QLabel" name="label_29">
+               <property name="maximumSize">
+                <size>
+                 <width>50</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="text">
+                <string>VIP:</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QSpinBox" name="vipVisitors">
+               <property name="maximumSize">
+                <size>
+                 <width>100</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="maximum">
+                <number>999</number>
+               </property>
+              </widget>
+             </item>
+             <item>
               <widget class="QLabel" name="label_10">
                <property name="maximumSize">
                 <size>
@@ -522,13 +726,16 @@
                <property name="text">
                 <string>Всего постетителей:</string>
                </property>
+               <property name="alignment">
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
               </widget>
              </item>
              <item>
               <widget class="QSpinBox" name="allVisitorsCount">
                <property name="maximumSize">
                 <size>
-                 <width>200</width>
+                 <width>100</width>
                  <height>16777215</height>
                 </size>
                </property>
@@ -582,7 +789,7 @@
                 </font>
                </property>
                <property name="text">
-                <string>Наличные:</string>
+                <string>Распределение:</string>
                </property>
                <property name="alignment">
                 <set>Qt::AlignCenter</set>
@@ -608,12 +815,12 @@
                 <item row="0" column="0">
                  <widget class="QLabel" name="label_11">
                   <property name="text">
-                   <string>За вход:</string>
+                   <string>За вход наличными (A):</string>
                   </property>
                  </widget>
                 </item>
                 <item row="0" column="1">
-                 <widget class="QSpinBox" name="cashInEdit">
+                 <widget class="QSpinBox" name="allInEdit">
                   <property name="readOnly">
                    <bool>true</bool>
                   </property>
@@ -634,12 +841,12 @@
                 <item row="1" column="0">
                  <widget class="QLabel" name="label_12">
                   <property name="text">
-                   <string>За размещение:</string>
+                   <string>За размещение всего (R):</string>
                   </property>
                  </widget>
                 </item>
                 <item row="1" column="1">
-                 <widget class="QSpinBox" name="cashSitEdit">
+                 <widget class="QSpinBox" name="allSitEdit">
                   <property name="readOnly">
                    <bool>true</bool>
                   </property>
@@ -660,38 +867,12 @@
                 <item row="2" column="0">
                  <widget class="QLabel" name="label_13">
                   <property name="text">
-                   <string>За кухню:</string>
+                   <string>За кухню всего (R):</string>
                   </property>
                  </widget>
                 </item>
                 <item row="2" column="1">
-                 <widget class="QSpinBox" name="cashFoodEdit">
-                  <property name="readOnly">
-                   <bool>true</bool>
-                  </property>
-                  <property name="buttonSymbols">
-                   <enum>QAbstractSpinBox::NoButtons</enum>
-                  </property>
-                  <property name="showGroupSeparator" stdset="0">
-                   <bool>true</bool>
-                  </property>
-                  <property name="minimum">
-                   <number>-999999999</number>
-                  </property>
-                  <property name="maximum">
-                   <number>999999999</number>
-                  </property>
-                 </widget>
-                </item>
-                <item row="3" column="0">
-                 <widget class="QLabel" name="label_14">
-                  <property name="text">
-                   <string>Отель:</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="3" column="1">
-                 <widget class="QSpinBox" name="cashHotelEdit">
+                 <widget class="QSpinBox" name="allFoodEdit">
                   <property name="readOnly">
                    <bool>true</bool>
                   </property>
@@ -710,14 +891,14 @@
                  </widget>
                 </item>
                 <item row="4" column="0">
-                 <widget class="QLabel" name="label_15">
+                 <widget class="QLabel" name="label_14">
                   <property name="text">
-                   <string>Доп услуги:</string>
+                   <string>За отель всего (R):</string>
                   </property>
                  </widget>
                 </item>
                 <item row="4" column="1">
-                 <widget class="QSpinBox" name="cashAdditionalServicesEdit">
+                 <widget class="QSpinBox" name="allHotelEdit">
                   <property name="readOnly">
                    <bool>true</bool>
                   </property>
@@ -736,14 +917,170 @@
                  </widget>
                 </item>
                 <item row="5" column="0">
-                 <widget class="QLabel" name="label_21">
+                 <widget class="QLabel" name="label_20">
                   <property name="text">
-                   <string>Неплательщики:</string>
+                   <string>За бани и сауны всего (R):</string>
                   </property>
                  </widget>
                 </item>
                 <item row="5" column="1">
-                 <widget class="QSpinBox" name="cashInvadersEdit">
+                 <widget class="QSpinBox" name="allBathEdit">
+                  <property name="readOnly">
+                   <bool>true</bool>
+                  </property>
+                  <property name="buttonSymbols">
+                   <enum>QAbstractSpinBox::NoButtons</enum>
+                  </property>
+                  <property name="showGroupSeparator" stdset="0">
+                   <bool>true</bool>
+                  </property>
+                  <property name="minimum">
+                   <number>-999999999</number>
+                  </property>
+                  <property name="maximum">
+                   <number>999999999</number>
+                  </property>
+                 </widget>
+                </item>
+                <item row="6" column="0">
+                 <widget class="QLabel" name="label_26">
+                  <property name="text">
+                   <string>За кальяны всего (R):</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="6" column="1">
+                 <widget class="QSpinBox" name="allHookahEdit">
+                  <property name="readOnly">
+                   <bool>true</bool>
+                  </property>
+                  <property name="buttonSymbols">
+                   <enum>QAbstractSpinBox::NoButtons</enum>
+                  </property>
+                  <property name="showGroupSeparator" stdset="0">
+                   <bool>true</bool>
+                  </property>
+                  <property name="minimum">
+                   <number>-999999999</number>
+                  </property>
+                  <property name="maximum">
+                   <number>999999999</number>
+                  </property>
+                 </widget>
+                </item>
+                <item row="7" column="0">
+                 <widget class="QLabel" name="label_15">
+                  <property name="text">
+                   <string>Остальное (R):</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="7" column="1">
+                 <widget class="QSpinBox" name="allAdditionalServicesEdit">
+                  <property name="readOnly">
+                   <bool>true</bool>
+                  </property>
+                  <property name="buttonSymbols">
+                   <enum>QAbstractSpinBox::NoButtons</enum>
+                  </property>
+                  <property name="showGroupSeparator" stdset="0">
+                   <bool>true</bool>
+                  </property>
+                  <property name="minimum">
+                   <number>-999999999</number>
+                  </property>
+                  <property name="maximum">
+                   <number>999999999</number>
+                  </property>
+                 </widget>
+                </item>
+                <item row="9" column="0">
+                 <widget class="QLabel" name="label_21">
+                  <property name="text">
+                   <string>Неплательщики (R):</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="9" column="1">
+                 <widget class="QSpinBox" name="allInvadersEdit">
+                  <property name="readOnly">
+                   <bool>true</bool>
+                  </property>
+                  <property name="buttonSymbols">
+                   <enum>QAbstractSpinBox::NoButtons</enum>
+                  </property>
+                  <property name="showGroupSeparator" stdset="0">
+                   <bool>true</bool>
+                  </property>
+                  <property name="minimum">
+                   <number>-999999999</number>
+                  </property>
+                  <property name="maximum">
+                   <number>999999999</number>
+                  </property>
+                 </widget>
+                </item>
+                <item row="10" column="0">
+                 <widget class="QLabel" name="label_16">
+                  <property name="text">
+                   <string>Скидки (R):</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="10" column="1">
+                 <widget class="QSpinBox" name="allDiscountsEdit">
+                  <property name="readOnly">
+                   <bool>true</bool>
+                  </property>
+                  <property name="buttonSymbols">
+                   <enum>QAbstractSpinBox::NoButtons</enum>
+                  </property>
+                  <property name="showGroupSeparator" stdset="0">
+                   <bool>true</bool>
+                  </property>
+                  <property name="minimum">
+                   <number>-999999999</number>
+                  </property>
+                  <property name="maximum">
+                   <number>999999999</number>
+                  </property>
+                 </widget>
+                </item>
+                <item row="3" column="0">
+                 <widget class="QLabel" name="label_28">
+                  <property name="text">
+                   <string>За бар (R):</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="3" column="1">
+                 <widget class="QSpinBox" name="allBar">
+                  <property name="readOnly">
+                   <bool>true</bool>
+                  </property>
+                  <property name="buttonSymbols">
+                   <enum>QAbstractSpinBox::NoButtons</enum>
+                  </property>
+                  <property name="showGroupSeparator" stdset="0">
+                   <bool>true</bool>
+                  </property>
+                  <property name="minimum">
+                   <number>-999999999</number>
+                  </property>
+                  <property name="maximum">
+                   <number>999999999</number>
+                  </property>
+                 </widget>
+                </item>
+                <item row="8" column="0">
+                 <widget class="QLabel" name="label_30">
+                  <property name="text">
+                   <string>С прошлого дня (R):</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="8" column="1">
+                 <widget class="QSpinBox" name="diffFromPrevDay">
                   <property name="readOnly">
                    <bool>true</bool>
                   </property>
@@ -776,6 +1113,12 @@
           </item>
           <item>
            <widget class="QFrame" name="frame_7">
+            <property name="minimumSize">
+             <size>
+              <width>500</width>
+              <height>0</height>
+             </size>
+            </property>
             <property name="frameShape">
              <enum>QFrame::StyledPanel</enum>
             </property>
@@ -798,7 +1141,7 @@
                 </font>
                </property>
                <property name="text">
-                <string>Терминал</string>
+                <string>Итоги:</string>
                </property>
                <property name="alignment">
                 <set>Qt::AlignCenter</set>
@@ -814,6 +1157,12 @@
              </item>
              <item>
               <widget class="QFrame" name="frame_9">
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>0</height>
+                </size>
+               </property>
                <property name="frameShape">
                 <enum>QFrame::StyledPanel</enum>
                </property>
@@ -822,20 +1171,14 @@
                </property>
                <layout class="QFormLayout" name="formLayout_2">
                 <item row="0" column="0">
-                 <widget class="QLabel" name="label_16">
+                 <widget class="QLabel" name="label_17">
                   <property name="text">
-                   <string>За вход:</string>
+                   <string>Предыдущий остаток:</string>
                   </property>
                  </widget>
                 </item>
                 <item row="0" column="1">
-                 <widget class="QSpinBox" name="cardInEdit">
-                  <property name="readOnly">
-                   <bool>true</bool>
-                  </property>
-                  <property name="buttonSymbols">
-                   <enum>QAbstractSpinBox::NoButtons</enum>
-                  </property>
+                 <widget class="QSpinBox" name="cashToBankPrev">
                   <property name="showGroupSeparator" stdset="0">
                    <bool>true</bool>
                   </property>
@@ -848,14 +1191,41 @@
                  </widget>
                 </item>
                 <item row="1" column="0">
-                 <widget class="QLabel" name="label_17">
+                 <widget class="QLabel" name="label_24">
                   <property name="text">
-                   <string>За размещение:</string>
+                   <string>Инкассация:</string>
                   </property>
                  </widget>
                 </item>
                 <item row="1" column="1">
-                 <widget class="QSpinBox" name="cardSitEdit">
+                 <widget class="QSpinBox" name="cashToBank">
+                  <property name="showGroupSeparator" stdset="0">
+                   <bool>true</bool>
+                  </property>
+                  <property name="minimum">
+                   <number>-999999999</number>
+                  </property>
+                  <property name="maximum">
+                   <number>999999999</number>
+                  </property>
+                 </widget>
+                </item>
+                <item row="3" column="0" colspan="2">
+                 <widget class="Line" name="line_12">
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                 </widget>
+                </item>
+                <item row="4" column="0">
+                 <widget class="QLabel" name="label_25">
+                  <property name="text">
+                   <string>Остаток наличных:</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="4" column="1">
+                 <widget class="QSpinBox" name="finalCashe">
                   <property name="readOnly">
                    <bool>true</bool>
                   </property>
@@ -867,6 +1237,32 @@
                   </property>
                   <property name="minimum">
                    <number>-999999999</number>
+                  </property>
+                  <property name="maximum">
+                   <number>999999999</number>
+                  </property>
+                 </widget>
+                </item>
+                <item row="5" column="0">
+                 <widget class="QLabel" name="label_27">
+                  <property name="text">
+                   <string>Всего в банк:</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="5" column="1">
+                 <widget class="QSpinBox" name="finalBank">
+                  <property name="readOnly">
+                   <bool>true</bool>
+                  </property>
+                  <property name="buttonSymbols">
+                   <enum>QAbstractSpinBox::NoButtons</enum>
+                  </property>
+                  <property name="showGroupSeparator" stdset="0">
+                   <bool>true</bool>
+                  </property>
+                  <property name="minimum">
+                   <number>-1000000009</number>
                   </property>
                   <property name="maximum">
                    <number>999999999</number>
@@ -874,72 +1270,14 @@
                  </widget>
                 </item>
                 <item row="2" column="0">
-                 <widget class="QLabel" name="label_18">
+                 <widget class="QLabel" name="label_31">
                   <property name="text">
-                   <string>За кухню:</string>
+                   <string>Расходы по актам:</string>
                   </property>
                  </widget>
                 </item>
                 <item row="2" column="1">
-                 <widget class="QSpinBox" name="cardFoodEdit">
-                  <property name="readOnly">
-                   <bool>true</bool>
-                  </property>
-                  <property name="buttonSymbols">
-                   <enum>QAbstractSpinBox::NoButtons</enum>
-                  </property>
-                  <property name="showGroupSeparator" stdset="0">
-                   <bool>true</bool>
-                  </property>
-                  <property name="minimum">
-                   <number>-999999999</number>
-                  </property>
-                  <property name="maximum">
-                   <number>999999999</number>
-                  </property>
-                 </widget>
-                </item>
-                <item row="3" column="0">
-                 <widget class="QLabel" name="label_19">
-                  <property name="text">
-                   <string>Отель:</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="3" column="1">
-                 <widget class="QSpinBox" name="cardHotelEdit">
-                  <property name="readOnly">
-                   <bool>true</bool>
-                  </property>
-                  <property name="buttonSymbols">
-                   <enum>QAbstractSpinBox::NoButtons</enum>
-                  </property>
-                  <property name="showGroupSeparator" stdset="0">
-                   <bool>true</bool>
-                  </property>
-                  <property name="minimum">
-                   <number>-999999999</number>
-                  </property>
-                  <property name="maximum">
-                   <number>999999999</number>
-                  </property>
-                 </widget>
-                </item>
-                <item row="4" column="0">
-                 <widget class="QLabel" name="label_20">
-                  <property name="text">
-                   <string>Доп. услуги:</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="4" column="1">
-                 <widget class="QSpinBox" name="cardAdditionalServicesEdit">
-                  <property name="readOnly">
-                   <bool>true</bool>
-                  </property>
-                  <property name="buttonSymbols">
-                   <enum>QAbstractSpinBox::NoButtons</enum>
-                  </property>
+                 <widget class="QSpinBox" name="writeOffs">
                   <property name="showGroupSeparator" stdset="0">
                    <bool>true</bool>
                   </property>
@@ -954,6 +1292,13 @@
                </layout>
               </widget>
              </item>
+             <item>
+              <widget class="QPushButton" name="printButton">
+               <property name="text">
+                <string>Печать!</string>
+               </property>
+              </widget>
+             </item>
             </layout>
            </widget>
           </item>
@@ -961,102 +1306,6 @@
         </widget>
        </item>
       </layout>
-     </widget>
-    </item>
-    <item row="1" column="0">
-     <widget class="Line" name="line_9">
-      <property name="orientation">
-       <enum>Qt::Horizontal</enum>
-      </property>
-     </widget>
-    </item>
-    <item row="2" column="0">
-     <widget class="QFrame" name="frame_14">
-      <property name="frameShape">
-       <enum>QFrame::StyledPanel</enum>
-      </property>
-      <property name="frameShadow">
-       <enum>QFrame::Raised</enum>
-      </property>
-      <layout class="QHBoxLayout" name="horizontalLayout_8">
-       <item>
-        <widget class="QFrame" name="frame_15">
-         <property name="frameShape">
-          <enum>QFrame::StyledPanel</enum>
-         </property>
-         <property name="frameShadow">
-          <enum>QFrame::Raised</enum>
-         </property>
-         <layout class="QHBoxLayout" name="horizontalLayout_7">
-          <item>
-           <widget class="QLabel" name="label_24">
-            <property name="text">
-             <string>Инкассация:</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QSpinBox" name="cashToBank">
-            <property name="showGroupSeparator" stdset="0">
-             <bool>true</bool>
-            </property>
-            <property name="minimum">
-             <number>-999999999</number>
-            </property>
-            <property name="maximum">
-             <number>999999999</number>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-       </item>
-       <item>
-        <widget class="QFrame" name="frame_16">
-         <property name="frameShape">
-          <enum>QFrame::StyledPanel</enum>
-         </property>
-         <property name="frameShadow">
-          <enum>QFrame::Raised</enum>
-         </property>
-         <layout class="QHBoxLayout" name="horizontalLayout_6">
-          <item>
-           <widget class="QLabel" name="label_25">
-            <property name="text">
-             <string>Остаток:</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QSpinBox" name="finalCashe">
-            <property name="readOnly">
-             <bool>true</bool>
-            </property>
-            <property name="buttonSymbols">
-             <enum>QAbstractSpinBox::NoButtons</enum>
-            </property>
-            <property name="showGroupSeparator" stdset="0">
-             <bool>true</bool>
-            </property>
-            <property name="minimum">
-             <number>-999999999</number>
-            </property>
-            <property name="maximum">
-             <number>999999999</number>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-    </item>
-    <item row="3" column="0">
-     <widget class="QPushButton" name="printButton">
-      <property name="text">
-       <string>Печать!</string>
-      </property>
      </widget>
     </item>
    </layout>

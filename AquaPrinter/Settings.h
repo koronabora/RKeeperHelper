@@ -8,9 +8,20 @@
 #include <QFile>
 #include <QDebug>
 #include <QDate>
+#include <QStringList>
 #include "AllData.h"
 
 #define DEF_FILE_NAME "Settings.ini"
+
+enum SQL_STATES
+{
+	NOT_CONNECTED,
+	CONNECTING,
+	CONNECTED
+};
+
+static const QStringList SQL_STATE_NAMES = 
+{QObject::tr("Отключен"), QObject::tr("Подключение"), QObject::tr("Подключен")};
 
 class Settings : public QObject
 {
@@ -33,6 +44,14 @@ public:
 	QString uiOrigionalText;
 	qint64	progressBarMax;
 	qint64 pass;
+	qint64 sqlRetries;
+
+	QString lostFolioUiName;
+	QString lostFolioUiCloseButton;
+	QString lostFolioUiMainTable;
+	QString lostFolioUiMainTableC1Name;
+	QString lostFolioUiMainTableC2Name;
+	QString lostFolioUiMainTableC3Name;
 
 	QString rkHost;
 	QString rkName;
@@ -51,30 +70,37 @@ public:
 	qint64 printDTy;
 
 	qreal addTime;
-	QString cardAdditionalServices;
-	QString cardHotel;
-	QString cardFood;
-	QString cardSit;
-	QString cardIn;
-	//QString cashNoPayments;
-	QString cashHotel;
-	QString cashFood;
-	QString cashSit;
-	QString cashIn;
+	QString addTimeRk;
+	QString timeFormatRk;
+	QString dateFormatRk;
+	QString allIn;
+	QString rkAdditionalServices;
+	QString rkSittings;
+	QString rkKitchen;
+	QString rkBar;
+	QString rkHotel;
+	QString rkBaths;
+	QString rkHookahs;
+	QString rkInvaders;
+	QString rkDiscounts;
+	
 	QString allVisitorsCount;
 	QString incomeCards;
+	
 	QString whiteCard;
 	QString whiteCash;
+	QString whiteDisc;
 	QString blueCard;
 	QString blueCash;
-	QString cashAdditionalServices;
-	QString rkAdditionalServices; // additional services
-	QString rkSittings; // sittings
-	QString rkKitchen; // kitchen services
-	QString rkHotel; // hotel
-	QString rkInvaders; // vip
+	QString blueDisc;
 	
+	QString allFolios;
+	QString cardByFolio;
+	QString cashByFolio;
+	QString lostFolios;
+
 	static Settings* i();
+	static QString fNum(qint64 num);
 
 	void init();
 private:

@@ -16,9 +16,6 @@ public:
 	PrintHandler();
 	~PrintHandler();
 
-private: 
-	QString fNum(qint64 num);
-
 public slots :
 	void run();
 	void printInfo(AllData s);

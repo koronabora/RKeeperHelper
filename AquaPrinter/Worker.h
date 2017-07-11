@@ -49,36 +49,14 @@ private:
 
 	QVector<AllData> storage;
 
-	qint64 getBlueCash(QDate date);
-	qint64 getBlueCard(QDate date);
-	qint64 getWhiteCash(QDate date);
-	qint64 getWhiteCard(QDate date);
-	qint64 getAllKeysCount(QDate date);
-	qint64 getAllVisitorsCount(QDate date);
-	qint64 getCashIn(QDate date);
-	qint64 getCashSit(QDate date, QVector<quint64> orders);
-	qint64 getCashFood(QDate date, QVector<quint64> orders);
-	qint64 getCashHotel(QDate date, QVector<quint64> orders);
-	qint64 getCashBaths(QDate date, QVector<quint64> orders);
-	qint64 getCashHookah(QDate date, QVector<quint64> orders);
-	qint64 getCashAdditionalService(QDate date, QVector<quint64> orders);
-	qint64 cashGetVIP(QDate date);
-	qint64 getCardIn(QDate date);
-	qint64 getCardSit(QDate date, QVector<quint64> orders);
-	qint64 getCardFood(QDate date, QVector<quint64> orders);
-	qint64 getCardHotel(QDate date, QVector<quint64> orders);
-	qint64 getCardBaths(QDate date, QVector<quint64> orders);
-	qint64 getCardHookah(QDate date, QVector<quint64> orders);
-	qint64 getCardAdditionalService(QDate date, QVector<quint64> orders);
+	qint64 universalSql(QString src, QDate date);
+	qint64 universalSqlRk(QString src, QDate date);
 	QString fillReq(QString src, QDate date);
 	QString fillReqRk(QString src, QDate date);
 
-	QVector<quint64> getAdditionalServices(QDate day);
-	QVector<quint64> getSits(QDate day);
-	QVector<quint64> getKitchen(QDate day);
-	QVector<quint64> getBath(QDate day);
-	QVector<quint64> getHookah(QDate day);
-	QVector<quint64> getHotel(QDate day);
+	QVector<QVector<qint64>> getLostFolios(QDate day); // payed by card
+	qint64 cashByFolio(qint64 folio);
+	qint64 cardByFolio(qint64 folio);
 
 	bool init();
 	bool initRk();
@@ -92,7 +70,7 @@ public slots :
 signals:
 	void workFinished();
 	void haveInfo(AllData s);
-	void mssqlStateChanged(bool state);
-	void fbsqllStateChanged(bool state);
+	void mssqlStateChanged(quint64 state);
+	void fbsqllStateChanged(quint64 state);
 	void updateProgressBar();
 };

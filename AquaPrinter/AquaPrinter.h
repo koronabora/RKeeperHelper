@@ -9,6 +9,8 @@
 #include <QMessageBox>
 #include <QInputDialog>
 #include <QDir>
+#include <QTableWidget>
+#include <QUiLoader> 
 #include "ui_AquaPrinter.h"
 #include "Settings.h"
 
@@ -37,32 +39,46 @@ private:
 	QLabel* whiteOriginalCashEdit;
 	QSpinBox* whiteCardEdit;
 	QLabel* whiteCardOriginalLabel;
+	
 	QSpinBox* allKeysCount;
 	QSpinBox* allVisitorsCount;
-	QSpinBox* cashInEdit;
-	QSpinBox* cashSitEdit;
-	QSpinBox* cashFoodEdit;
-	QSpinBox* cashHotelEdit;
-	QSpinBox* cashAdditionalServicesEdit;
-	QSpinBox* cashInvadersEdit;
-	QSpinBox* cardInEdit;
-	QSpinBox* cardSitEdit;
-	QSpinBox* cardFoodEdit;
-	QSpinBox* cardHotelEdit;
-	QSpinBox* cardAdditionalServicesEdit;
+	QSpinBox* vipVisitors;
+
+	QSpinBox* allInEdit;
+	QSpinBox* allSitEdit;
+	QSpinBox* allFoodEdit;
+	QSpinBox* allBar;
+	QSpinBox* allHotelEdit;
+	QSpinBox* allAdditionalServicesEdit;
+	QSpinBox* allInvadersEdit;
+	QSpinBox* allDiscountsEdit;
 	QSpinBox* cashToBank;
 	QSpinBox* finalCashe;
+
+	QSpinBox* allBathEdit;
+	QSpinBox* allHookahEdit;
+	QSpinBox* cashToBankPrev;
+	QSpinBox* finalBank;
+	QSpinBox* blueDisc;
+	QSpinBox* whiteDisc;
+	QSpinBox* diffFromPrevDay;
+
+	QSpinBox* writeOffs;
+	QSpinBox* lostFolios;
+	QPushButton* lostFoliosButton;
+
 	QPushButton* printButton;
 	QStatusBar* statusBar;
 	QLabel* statusBarLabel;
 	QProgressBar* statusProgressBar;
 
 	void fillData();
-	bool fbState;
-	bool msState;
+	quint64 fbState;
+	quint64 msState;
 	void updateStatusBar();
 	void updateFinalCash();
 
+	QUiLoader loader;
 signals:
 	void getInfo(QDate date);
 	void printInfo(AllData s);
@@ -70,15 +86,19 @@ signals:
 public slots :
 	void calendarSelected();
 	void buttonPressed();
+	void lostFoliosButtonPressed();
 	void haveInfo(AllData s);
-	void blueAllEdited();
-	void blueCashEdited();
-	void blueCardEdited();
-	void whiteAllEdited();
-	void whiteCashEdited();
-	void whiteCardEdited();
+	void blueAllEdited(int i);
+	void blueCashEdited(int i);
+	void blueCardEdited(int i);
+	void whiteAllEdited(int i);
+	void whiteCashEdited(int i);
+	void whiteCardEdited(int i);
 	void cashToBankTextChanged(int i);
-	void mssqlStateChanged(bool state);
-	void fbsqllStateChanged(bool state);
+	void cashToBankPrevTextChanged(int i);
+	void writeOffTextChanged(int i);
+	void mssqlStateChanged(quint64 state);
+	void fbsqllStateChanged(quint64 state);
 	void updateProgressBar();
+	void vipVisitorsChanged(int i);
 };
