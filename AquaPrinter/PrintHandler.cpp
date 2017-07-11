@@ -23,7 +23,7 @@ void PrintHandler::printInfo(AllData s)
 	else
 	{
 		QPainter painter(&printer); // create a painter which will paint 'on printer'.
-		QFont font = QFont(Settings::i()->printFont, Settings::i()->printFontSize + 2);
+		QFont font = QFont(Settings::i()->printFont, Settings::i()->printFontSize + 4);
 		painter.setFont(font);
 		qint64 lineWrap = Settings::i()->printVerticalLineWrap;
 		qint64 lineShift = Settings::i()->printVerticalLineShift;
@@ -87,7 +87,7 @@ void PrintHandler::printInfo(AllData s)
 		painter.drawText(Settings::i()->printHorizontalLineShift*lX, (lineShift + lineWrap*(k++))*lY, tr("Браслетов: ") + Settings::fNum(s.allKeysCount));
 		painter.drawText(Settings::i()->printHorizontalLineShift*lX, (lineShift + lineWrap*(k++))*lY, tr("Посетителей: ") + Settings::fNum(s.allVisitorsCount));
 		painter.drawText(Settings::i()->printHorizontalLineShift*lX, (lineShift + lineWrap*(k++))*lY, tr("Из них VIP: ")+Settings::fNum(s.vipVisitors));
-		painter.drawText(Settings::i()->printHorizontalLineShift*lX, (lineShift + lineWrap*(k++))*lY, tr("Потеряных заказов: ") + Settings::fNum(s.lostFolios.size()));
+		painter.drawText(Settings::i()->printHorizontalLineShift*lX, (lineShift + lineWrap*(k++))*lY, tr("Неоткрепленных браслетов: ") + Settings::fNum(s.lostFolios.size()));
 		k++;
 		font.setBold(true);
 		painter.setFont(font);

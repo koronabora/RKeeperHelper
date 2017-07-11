@@ -63,7 +63,7 @@ public:
 
     void retranslateUi(QMainWindow *Information)
     {
-        Information->setWindowTitle(QApplication::translate("Information", "MainWindow", Q_NULLPTR));
+        Information->setWindowTitle(QApplication::translate("Information", "\320\232\320\260\321\200\321\202\321\213", Q_NULLPTR));
         closeButton->setText(QApplication::translate("Information", "\320\227\320\260\320\272\321\200\321\213\321\202\321\214", Q_NULLPTR));
     } // retranslateUi
 

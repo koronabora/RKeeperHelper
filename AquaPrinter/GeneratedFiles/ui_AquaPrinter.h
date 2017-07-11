@@ -488,7 +488,7 @@ public:
 
         label_32 = new QLabel(frame_12);
         label_32->setObjectName(QStringLiteral("label_32"));
-        label_32->setMaximumSize(QSize(150, 16777215));
+        label_32->setMaximumSize(QSize(200, 16777215));
 
         horizontalLayout_3->addWidget(label_32);
 
@@ -939,7 +939,7 @@ public:
         whiteAllOriginalLabel->setText(QString());
         label_19->setText(QApplication::translate("AquaPrinterClass", "\320\241\320\272\320\270\320\264\320\272\320\270 \320\270 \320\262\320\276\320\267\320\262\321\200\320\260\321\202\321\213:", Q_NULLPTR));
         label_9->setText(QApplication::translate("AquaPrinterClass", "\320\222\321\201\320\265\320\263\320\276 \320\261\321\200\320\260\321\201\320\273\320\265\321\202\320\276\320\262:", Q_NULLPTR));
-        label_32->setText(QApplication::translate("AquaPrinterClass", "\320\237\320\276\321\202\320\265\321\200\321\217\320\275\321\213\321\205 \320\267\320\260\320\272\320\260\320\267\320\276\320\262:", Q_NULLPTR));
+        label_32->setText(QApplication::translate("AquaPrinterClass", "\320\235\320\265\320\276\321\202\320\272\321\200\320\265\320\277\320\273\320\265\320\275\320\275\321\213\321\205 \320\272\320\260\321\200\321\202:", Q_NULLPTR));
         lostFoliosButton->setText(QApplication::translate("AquaPrinterClass", "...", Q_NULLPTR));
         label_29->setText(QApplication::translate("AquaPrinterClass", "VIP:", Q_NULLPTR));
         label_10->setText(QApplication::translate("AquaPrinterClass", "\320\222\321\201\320\265\320\263\320\276 \320\277\320\276\321\201\321\202\320\265\321\202\320\270\321\202\320\265\320\273\320\265\320\271:", Q_NULLPTR));
